@@ -1,0 +1,8 @@
+freebsd:
+  periodic:
+    enabled: true
+    file: "/etc/periodic.conf.local"
+    options:
+      - daily_output: "/var/log/daily.log"
+      - weekly_output: "/var/log/weekly.log"
+      - monthly_output: "/var/log/monthly.log"

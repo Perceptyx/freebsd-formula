@@ -1,0 +1,4 @@
+freebsd:
+  periodic:
+    enabled: false
+    file: "/etc/periodic.conf.local"
