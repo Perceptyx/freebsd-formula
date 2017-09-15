@@ -1,4 +1,4 @@
-# FreeBSD Formula [![Build Status](https://travis-ci.org/Perceptyx/freebsd-formula.png?branch=master)](https://travis-ci.org/Perceptyx/freebsd-formula)
+# FreeBSD Formula 
 
 A saltstack formula that configures FreeBSD Systems.
 
