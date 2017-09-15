@@ -1,8 +1,7 @@
-# FreeBSD Formula
+# FreeBSD Formula [![Build Status](https://travis-ci.org/Perceptyx/freebsd-formula.png?branch=master)](https://travis-ci.org/Perceptyx/freebsd-formula)
 
 A saltstack formula that configures FreeBSD Systems.
 
-_*NOTE*_: WIP, nothing useful yet
 
 ## Available states
 
@@ -12,3 +11,14 @@ _*NOTE*_: WIP, nothing useful yet
 ### Periodic
 
 - Configure how daily, weekly and monthly system maintenance jobs should run
+
+```yml
+freebsd:
+  periodic:
+    enabled: true
+    file: "/etc/periodic.conf.local"
+    options:
+      daily_output: "/var/log/daily.log"
+      weekly_output: "/var/log/weekly.log"
+      monthly_output: "/var/log/monthly.log"
+```

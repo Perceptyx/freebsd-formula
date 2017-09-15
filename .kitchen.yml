@@ -29,9 +29,9 @@ provisioner:
         - <%= formula_name %>
 
 platforms:
-  - name: FreeBSD-10.3-RELEASE
-    driver_config:
-      box: perceptyx/freebsd-10.3-amd64
+  - name: freebsd-10.3
+    driver:
+      cache_directory: false
 
 suites:
-  - name: FreeBSD-10.3-RELEASE
+  - name: default

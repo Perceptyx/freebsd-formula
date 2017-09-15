@@ -3,10 +3,11 @@
 
 {% set os_version_map = salt['grains.filter_by']({
   '10.3': {
-    'server': 'openssh',
-    'client': 'openssh',
-    'service': 'sshd',
-    'dig_pkg': 'bind-tools',
+  },
+  '11.0': {
+  },
+  '11.1': {
+  },
 }, grain='osrelease', merge=salt['pillar.get']('freebsd:lookup')) %}
 
 {## Merge the os_version_map to the default settings ##}
