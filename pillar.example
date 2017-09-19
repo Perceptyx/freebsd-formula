@@ -6,3 +6,15 @@ freebsd:
       daily_output: "/var/log/daily.log"
       weekly_output: "/var/log/weekly.log"
       monthly_output: "/var/log/monthly.log"
+  repositories_dir: "/usr/local/etc/pkg/repos"
+  repositories:
+    area51:
+      url: "http://meatwad.mouf.net/rubick/poudriere/packages/110-amd64-kde/"
+      enabled: true
+      mirror_type: "http"
+      priority: 2
+    mycompany:
+      url: 'http://pkg.mycompany.com/master/${ABI}'
+      enabled: true
+      mirror_type: "http"
+      priority: 100

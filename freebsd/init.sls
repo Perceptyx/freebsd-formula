@@ -10,4 +10,7 @@ include:
 {%- if pillar.freebsd.periodic.enabled %}
   - freebsd.periodic
 {%- endif %}
+{%- if pillar.freebsd.repositories %}
+  - freebsd.repositories
+{%- endif %}
 {%- endif %}
