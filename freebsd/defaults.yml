@@ -2,3 +2,4 @@ freebsd:
   periodic:
     enabled: false
     file: "/etc/periodic.conf.local"
+  repositories_dir: "/usr/local/etc/pkg/repos"
