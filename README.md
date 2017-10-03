@@ -7,6 +7,7 @@ A saltstack formula that configures FreeBSD Systems.
 
 - [`periodic`](#periodic)
 - [`repositories`](#repositories)
+- [`audit`](#audit)
 
 ### Periodic
 
@@ -35,4 +36,25 @@ freebsd:
       enabled: true
       mirror_type: "http"
       priority: 2
+```
+
+### Audit
+
+- Manage auditd service and configuration
+
+```yml
+freebsd:
+  audit:
+    enabled: true
+    control:
+      dir: "/var/audit"
+      dist: "off"
+      flags: "lo,aa"
+      minfree: "5"
+      naflags: "lo,aa"
+      policy: "cnt,argv"
+      filesz: "2M"
+      expire-after: "10M"
+    users:
+      root: "lo:no"
 ```

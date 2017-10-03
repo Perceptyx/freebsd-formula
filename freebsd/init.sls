@@ -13,4 +13,7 @@ include:
 {%- if pillar.freebsd.repositories %}
   - freebsd.repositories
 {%- endif %}
+{%- if pillar.freebsd.audit.enabled %}
+  - freebsd.audit
+{%- endif %}
 {%- endif %}
