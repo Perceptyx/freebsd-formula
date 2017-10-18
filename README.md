@@ -5,9 +5,31 @@ A saltstack formula that configures FreeBSD Systems.
 
 ## Available states
 
+- [`audit`](#audit)
 - [`periodic`](#periodic)
 - [`repositories`](#repositories)
-- [`audit`](#audit)
+- [`sysctl`](#sysctl)
+
+### Audit
+
+- Manage auditd service and configuration
+
+```yml
+freebsd:
+  audit:
+    enabled: true
+    control:
+      dir: "/var/audit"
+      dist: "off"
+      flags: "lo,aa"
+      minfree: "5"
+      naflags: "lo,aa"
+      policy: "cnt,argv"
+      filesz: "2M"
+      expire-after: "10M"
+    users:
+      root: "lo:no"
+```
 
 ### Periodic
 
@@ -38,23 +60,16 @@ freebsd:
       priority: 2
 ```
 
-### Audit
+### Sysctl
 
-- Manage auditd service and configuration
+- Manage kernel state
 
 ```yml
 freebsd:
-  audit:
+  sysctl:
     enabled: true
-    control:
-      dir: "/var/audit"
-      dist: "off"
-      flags: "lo,aa"
-      minfree: "5"
-      naflags: "lo,aa"
-      policy: "cnt,argv"
-      filesz: "2M"
-      expire-after: "10M"
-    users:
-      root: "lo:no"
+    settings:
+      net.inet.ip.portrange.first: 20000
+      kern.coredump: 0
+      kern.ipc.somaxconn: 1024
 ```
