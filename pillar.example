@@ -1,4 +1,17 @@
 freebsd:
+  audit:
+    enabled: true
+    control:
+      dir: "/var/audit"
+      dist: "off"
+      flags: "lo,aa"
+      minfree: "5"
+      naflags: "lo,aa"
+      policy: "cnt,argv"
+      filesz: "2M"
+      expire-after: "10M"
+    users:
+      root: "lo:no"
   periodic:
     enabled: true
     file: "/etc/periodic.conf.local"
@@ -18,16 +31,9 @@ freebsd:
       enabled: true
       mirror_type: "http"
       priority: 100
-  audit:
+  sysctl:
     enabled: true
-    control:
-      dir: "/var/audit"
-      dist: "off"
-      flags: "lo,aa"
-      minfree: "5"
-      naflags: "lo,aa"
-      policy: "cnt,argv"
-      filesz: "2M"
-      expire-after: "10M"
-    users:
-      root: "lo:no"
+    settings:
+      net.inet.ip.portrange.first: 20000
+      kern.coredump: 0
+      kern.ipc.somaxconn: 1024
