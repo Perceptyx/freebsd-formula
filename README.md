@@ -52,7 +52,7 @@ freebsd:
 
 ```yml
 freebsd:
-  repositoires:
+  repositories:
     area51:
       url: "http://meatwad.mouf.net/rubick/poudriere/packages/110-amd64-kde/"
       enabled: true
