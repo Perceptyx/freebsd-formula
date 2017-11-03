@@ -17,12 +17,10 @@
         mirror_type: {{ args.mirror_type }}
         priority: {{ args.priority }}
 
-{% endfor %}
-
-{%- if pillar.freebsd.repositories %}
 repository_update:
   cmd.run:
     - name: pkg update -f
     - onchanges:
-      - file: {{ freebsd.repositories_dir }}
-{% endif %}
+      - file: {{ repo }}-config
+
+{% endfor %}
