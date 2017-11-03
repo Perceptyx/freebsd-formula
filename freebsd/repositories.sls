@@ -18,3 +18,9 @@
         priority: {{ args.priority }}
 
 {% endfor %}
+
+repository_update:
+  cmd.run:
+    - name: pkg update -f
+    - onchanges:
+      - file: {{ freebsd.repositories_dir }}
