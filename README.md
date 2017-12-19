@@ -6,6 +6,7 @@ A saltstack formula that configures FreeBSD Systems.
 ## Available states
 
 - [`audit`](#audit)
+- [`newsyslog`](#newsyslog)
 - [`periodic`](#periodic)
 - [`repositories`](#repositories)
 - [`sysctl`](#sysctl)
@@ -29,6 +30,38 @@ freebsd:
       expire-after: "10M"
     users:
       root: "lo:no"
+```
+
+### Newsyslog
+
+- Manage newsyslog additional configurations
+
+```yml
+freebsd:
+  newsyslog:
+    enabled: true
+    newsyslog_include_conf: "/etc/newsyslog.conf.d/"
+    configs:
+      my_app:
+        log: '/var/log/my_app.log'
+        owner: 'root:wheel'
+        mode: '644'
+        count: '7'
+        size: '*'
+        when: '@T00'
+        flags: 'JBN'
+        pid_file: ''
+        sig_num: ''
+      nginx:
+        log: '/var/log/nginx/*.log'
+        owner: ''
+        mode: '644'
+        count: '30'
+        size: '100'
+        when: '*'
+        flags: 'JB'
+        pid_file: '/var/run/nginx.pid'
+        sig_num: '30'
 ```
 
 ### Periodic

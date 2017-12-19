@@ -1,14 +1,12 @@
-# {%- if freebsd is defined %}
-# include:
-# {%- if freebsd.periodic.enabled %}
-#   - freebsd.periodic
-# {%- endif %}
-# {%- endif %}
+{%- from "freebsd/map.jinja" import freebsd with context %}
 
 {%- if pillar.freebsd is defined %}
 include:
 {%- if pillar.freebsd.audit.enabled %}
   - freebsd.audit
+{%- endif %}
+{%- if pillar.freebsd.newsyslog.enabled %}
+  - freebsd.newsyslog
 {%- endif %}
 {%- if pillar.freebsd.periodic.enabled %}
   - freebsd.periodic
