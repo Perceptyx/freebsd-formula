@@ -21,19 +21,38 @@ freebsd:
       monthly_output: "/var/log/monthly.log"
   repositories_dir: "/usr/local/etc/pkg/repos"
   repositories:
-    area51:
-      url: "http://meatwad.mouf.net/rubick/poudriere/packages/110-amd64-kde/"
+    saltstack:
+      url: "http://repo.saltstack.com/freebsd/${ABI}/"
       enabled: true
       mirror_type: "http"
-      priority: 2
-    mycompany:
-      url: 'http://pkg.mycompany.com/master/${ABI}'
-      enabled: true
-      mirror_type: "http"
-      priority: 100
+      priority: 10
   sysctl:
     enabled: true
     settings:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
       kern.ipc.somaxconn: 1024
+  newsyslog:
+    enabled: true
+    newsyslog_include_conf: "/etc/newsyslog.conf.d/"
+    configs:
+      my_app:
+        log: '/var/log/my_app.log'
+        owner: 'root:wheel'
+        mode: '644'
+        count: '7'
+        size: '*'
+        when: '@T00'
+        flags: 'JBN'
+        pid_file: ''
+        sig_num: ''
+      nginx:
+        log: '/var/log/nginx/*.log'
+        owner: ''
+        mode: '644'
+        count: '30'
+        size: '100'
+        when: '*'
+        flags: 'JB'
+        pid_file: '/var/run/nginx.pid'
+        sig_num: '30'

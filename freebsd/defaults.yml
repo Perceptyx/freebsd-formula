@@ -7,3 +7,6 @@ freebsd:
   repositories_dir: "/usr/local/etc/pkg/repos"
   sysctl:
     enabled: false
+  newsyslog:
+    enabled: false
+    newsyslog_include_conf: "/etc/newsyslog.conf.d/"

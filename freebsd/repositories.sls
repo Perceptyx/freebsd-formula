@@ -17,7 +17,7 @@
         mirror_type: {{ args.mirror_type }}
         priority: {{ args.priority }}
 
-repository_update:
+repository-{{ repo }}-update:
   cmd.run:
     - name: pkg update -f
     - onchanges:
