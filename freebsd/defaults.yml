@@ -9,4 +9,4 @@ freebsd:
     enabled: false
   newsyslog:
     enabled: false
-    newsyslog_include_conf: "/etc/newsyslog.conf.d/"
+    newsyslog_include_conf: "/etc/newsyslog.conf.d"
