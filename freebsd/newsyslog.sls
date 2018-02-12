@@ -6,7 +6,7 @@
   file.managed:
     - source: salt://freebsd/files/newsyslog_conf
     - template: jinja
-    - owner: root
+    - user: root
     - group: wheel
     - mode: 644
     - context:
