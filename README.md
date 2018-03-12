@@ -40,7 +40,7 @@ freebsd:
 freebsd:
   newsyslog:
     enabled: true
-    newsyslog_include_conf: "/etc/newsyslog.conf.d/"
+    newsyslog_include_conf: "/etc/newsyslog.conf.d"
     configs:
       my_app:
         log: '/var/log/my_app.log'

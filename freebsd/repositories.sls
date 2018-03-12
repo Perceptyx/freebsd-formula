@@ -13,7 +13,7 @@
     - name: {{ freebsd.repositories_dir }}/{{ repo }}.conf
     - source: salt://freebsd/files/repo.conf
     - template: jinja
-    - owner: root
+    - user: root
     - group: wheel
     - mode: 644
     - context:

@@ -14,7 +14,7 @@ provisioner:
   salt_install: bootstrap
   salt_bootstrap_url: <% ENV['SALT_BOOTSTRAP_URL'] || 'https://bootstrap.saltstack.com' %>
   log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'debug' %>
-  salt_version: 2017.7.3
+  salt_version: latest
   pillars-from-files:
     <%= formula_name %>.sls: pillar.example
   pillars:
