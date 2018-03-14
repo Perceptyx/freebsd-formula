@@ -12,7 +12,7 @@ driver:
 provisioner:
   name: salt_solo
   salt_install: bootstrap
-  salt_bootstrap_url: <% ENV['SALT_BOOTSTRAP_URL'] || 'https://bootstrap.saltstack.com' %>
+  salt_bootstrap_url: <%= ENV['SALT_BOOTSTRAP_URL'] || 'https://bootstrap.saltstack.com' %>
   log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'debug' %>
   salt_version: latest
   pillars-from-files:
