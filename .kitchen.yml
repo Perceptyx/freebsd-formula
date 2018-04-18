@@ -36,9 +36,6 @@ platforms:
   - name: freebsd-11.1
     driver:
       cache_directory: false
-  - name: freebsd-11.1
-    driver:
-      cache_directory: false
 
 suites:
   - name: default
