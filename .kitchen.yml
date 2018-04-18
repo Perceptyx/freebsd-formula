@@ -30,7 +30,10 @@ provisioner:
         - <%= formula_name %>
 
 platforms:
-  - name: freebsd-10.3
+  - name: freebsd-10.4
+    driver:
+      cache_directory: false
+  - name: freebsd-11.1
     driver:
       cache_directory: false
   - name: freebsd-11.1
