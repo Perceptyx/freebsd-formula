@@ -10,3 +10,5 @@ freebsd:
   newsyslog:
     enabled: false
     newsyslog_include_conf: "/etc/newsyslog.conf.d"
+  kernel:
+    enabled: false
