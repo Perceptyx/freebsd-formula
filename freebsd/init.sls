@@ -17,4 +17,7 @@ include:
 {%- if pillar.freebsd.sysctl.enabled %}
   - freebsd.sysctl
 {%- endif %}
+{%- if pillar.freebsd.kernel.enabled %}
+  - freebsd.kernel
+{%- endif %}
 {%- endif %}

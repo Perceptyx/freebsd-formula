@@ -56,3 +56,8 @@ freebsd:
         flags: 'JB'
         pid_file: '/var/run/nginx.pid'
         sig_num: '30'
+  kernel:
+    enabled: true
+    modules:
+      - pfsync
+      - carp
