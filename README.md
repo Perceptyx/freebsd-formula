@@ -6,6 +6,7 @@ A saltstack formula that configures FreeBSD Systems.
 ## Available states
 
 - [`audit`](#audit)
+- [`networking`](#networking)
 - [`newsyslog`](#newsyslog)
 - [`periodic`](#periodic)
 - [`repositories`](#repositories)
@@ -30,6 +31,42 @@ freebsd:
       expire-after: "10M"
     users:
       root: "lo:no"
+```
+
+### Networking
+
+- Manage network interfaces configuration
+
+```yml
+freebsd:
+  networking:
+    # Makes the server to act as a gateway
+    gateway: True
+    # Sets the server default router / default gateway
+    #defaultrouter: 10.0.0.1
+    dns:
+      nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+      search:
+        - perceptyx.com
+        - domain.com
+    interfaces:
+      # It's recommended to use syncdhcp so netif service triggers a dhcp request on restart
+      em0: syncdhcp
+      em1:
+        aliases:
+          - 1.2.3.4 netmask 255.255.255.0
+          - 5.6.7.8/32
+      cloned_interfaces:
+        lagg0:
+          protocol: failover
+          ports:
+            - em2
+            - em3
+          aliases:
+            - 9.10.11.12/32
+            - 13.14.15.16 netmask 255.255.255.240
 ```
 
 ### Newsyslog

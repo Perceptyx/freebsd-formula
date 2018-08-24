@@ -5,6 +5,12 @@ include:
 {%- if pillar.freebsd.audit.enabled %}
   - freebsd.audit
 {%- endif %}
+{%- if pillar.freebsd.kernel.enabled %}
+  - freebsd.kernel
+{%- endif %}
+{%- if pillar.freebsd.networking is defined %}
+  - freebsd.networking
+{%- endif %}
 {%- if pillar.freebsd.newsyslog.enabled %}
   - freebsd.newsyslog
 {%- endif %}
@@ -17,7 +23,4 @@ include:
 {%- if pillar.freebsd.sysctl.enabled %}
   - freebsd.sysctl
 {%- endif %}
-{%- if pillar.freebsd.kernel.enabled %}
-  - freebsd.kernel
-{%- endif %}
-{%- endif %}
+{%- endif %} {# if pillar.freebsd is defined #}

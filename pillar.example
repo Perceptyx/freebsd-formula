@@ -32,6 +32,18 @@ freebsd:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
       kern.ipc.somaxconn: 1024
+  networking:
+    gateway: True
+    dns:
+      nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+      search:
+        - perceptyx.com
+        - domain.com
+    interfaces:
+      # It's recommended to use syncdhcp so netif service triggers a dhcp request on restart
+      em0: syncdhcp
   newsyslog:
     enabled: true
     newsyslog_include_conf: "/etc/newsyslog.conf.d"
@@ -61,3 +73,4 @@ freebsd:
     modules:
       - pfsync
       - carp
+      - if_lagg
