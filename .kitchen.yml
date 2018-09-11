@@ -40,7 +40,6 @@ provisioner:
 
 platforms:
   - name: freebsd-10.4
-  - name: freebsd-11.1
   - name: freebsd-11.2
 
 suites:

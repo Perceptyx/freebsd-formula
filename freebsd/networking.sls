@@ -34,7 +34,7 @@ freebsd_networking_dns_config:
   file.managed:
     - name: /etc/resolv.conf
     - mode: 0644
-    - owner: root
+    - user: root
     - group: wheel
     - contents:
       {% if networking.dns.search is defined %}
