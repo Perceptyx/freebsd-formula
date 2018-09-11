@@ -8,11 +8,20 @@ formula_name = formula['name']
 driver:
   name: vagrant
   hostname: freebsd.ci.local
+  linked_clone: true
+  cache_directory: false
 
 provisioner:
   name: salt_solo
+  bootstrap_url: https://raw.githubusercontent.com/Perceptyx/kitchen-salt/freebsd_assets_fix/assets/install.sh
   salt_install: bootstrap
-  salt_bootstrap_url: <%= ENV['SALT_BOOTSTRAP_URL'] || 'https://bootstrap.saltstack.com' %>
+  <% if ENV['SALT_BOOTSTRAP_URL'] %>
+  salt_bootstrap_url: <%= ENV['SALT_BOOTSTRAP_URL'] %>
+  <% end %>
+  salt_copy_filter:
+    - .kitchen
+    - .git
+    - .ssh
   log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'debug' %>
   salt_version: latest
   pillars-from-files:
@@ -31,14 +40,8 @@ provisioner:
 
 platforms:
   - name: freebsd-10.4
-    driver:
-      cache_directory: false
   - name: freebsd-11.1
-    driver:
-      cache_directory: false
   - name: freebsd-11.2
-    driver:
-      cache_directory: false
 
 suites:
   - name: default

@@ -1,3 +1,3 @@
 name: "freebsd"
-version: "0.2"
+version: "0.3"
 source: "https://github.com/Perceptyx/freebsd-formula"
