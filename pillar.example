@@ -1,6 +1,5 @@
 freebsd:
   audit:
-    enabled: true
     control:
       dir: "/var/audit"
       dist: "off"
@@ -13,7 +12,6 @@ freebsd:
     users:
       root: "lo:no"
   periodic:
-    enabled: true
     file: "/etc/periodic.conf.local"
     options:
       daily_output: "/var/log/daily.log"
@@ -27,7 +25,6 @@ freebsd:
       mirror_type: "http"
       priority: 10
   sysctl:
-    enabled: true
     settings:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
@@ -45,7 +42,6 @@ freebsd:
       # It's recommended to use syncdhcp so netif service triggers a dhcp request on restart
       em0: syncdhcp
   newsyslog:
-    enabled: true
     newsyslog_include_conf: "/etc/newsyslog.conf.d"
     configs:
       my_app:
@@ -69,7 +65,6 @@ freebsd:
         pid_file: '/var/run/nginx.pid'
         sig_num: '30'
   kernel:
-    enabled: true
     modules:
       - pfsync
       - carp
