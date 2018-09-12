@@ -6,6 +6,7 @@ A saltstack formula that configures FreeBSD Systems.
 ## Available states
 
 - [`audit`](#audit)
+- [`kernel`](#kernel)
 - [`networking`](#networking)
 - [`newsyslog`](#newsyslog)
 - [`periodic`](#periodic)
@@ -19,7 +20,6 @@ A saltstack formula that configures FreeBSD Systems.
 ```yml
 freebsd:
   audit:
-    enabled: true
     control:
       dir: "/var/audit"
       dist: "off"
@@ -31,6 +31,19 @@ freebsd:
       expire-after: "10M"
     users:
       root: "lo:no"
+```
+
+### Kernel
+
+- Manage kernel modules
+
+```yml
+freebsd:
+  kernel:
+    modules:
+      - pfsync
+      - carp
+      - if_lagg
 ```
 
 ### Networking
@@ -76,7 +89,6 @@ freebsd:
 ```yml
 freebsd:
   newsyslog:
-    enabled: true
     newsyslog_include_conf: "/etc/newsyslog.conf.d"
     configs:
       my_app:
@@ -108,7 +120,6 @@ freebsd:
 ```yml
 freebsd:
   periodic:
-    enabled: true
     file: "/etc/periodic.conf.local"
     options:
       daily_output: "/var/log/daily.log"
@@ -137,7 +148,6 @@ freebsd:
 ```yml
 freebsd:
   sysctl:
-    enabled: true
     settings:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
