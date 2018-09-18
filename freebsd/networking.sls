@@ -25,12 +25,28 @@ freebsd_networking_defaultrouter:
 {% endif %} {# if networking.defaultrouter is defined #}
 
 {% if networking.dns.nameservers is defined %}
-freebsd_networking_dns_config:
-  sysrc.managed:
-    - name: resolvconf
-    - value: "NO"
+resolvconf_config:
+  file.managed:
+    - name: /etc/resolvconf.conf
+    - mode: 0644
+    - user: root
+    - group: wheel
+    - contents:
+      - resolvconf="NO"
+      {% if networking.dns.search is defined %}
+      - search_domains="{{ ' '.join(networking.dns.search) }}"
+      {% endif %}
+      {% if networking.dns.nameservers is defined %}
+      - name_servers="{{ ' '.join(networking.dns.nameservers) }}"
+      {% endif %}
+  cmd.run:
+    - name: resolvconf -u
     - require_in:
       - file: freebsd_networking_dns_config
+    - onchanges:
+      - file: resolvconf_config
+
+freebsd_networking_dns_config:
   file.managed:
     - name: /etc/resolv.conf
     - mode: 0644
@@ -38,12 +54,12 @@ freebsd_networking_dns_config:
     - group: wheel
     - contents:
       {% if networking.dns.search is defined %}
-        - search {{ " ".join(networking.dns.search) }}
+      - search {{ " ".join(networking.dns.search) }}
       {% endif %}
       {% for dns in networking.dns.nameservers %}
-        - nameserver {{ dns }}
+      - nameserver {{ dns }}
       {% endfor %}
-    - require:
+    - require_in:
       - cmd: freebsd_networking_restart
 {% endif %} {# if networking.defaultrouter is defined #}
 
