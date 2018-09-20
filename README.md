@@ -113,6 +113,28 @@ freebsd:
         sig_num: '30'
 ```
 
+### Packages
+
+- Install and remove packages, specifying repository if needed
+
+```yml
+freebsd:
+  packages:
+    installed:
+      - nginx
+    latest:
+      - bash
+    absent:
+      - virtualbox-ose-additions-nox11
+    custom:
+      docbook:
+        status: installed
+        repository: saltstack
+      gettext-tools:
+        status: latest
+        repository: saltstack
+```
+
 ### Periodic
 
 - Configure how daily, weekly and monthly system maintenance jobs should run
