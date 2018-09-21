@@ -14,6 +14,9 @@ include:
   {%- if pillar.freebsd.newsyslog is defined %}
   - freebsd.newsyslog
   {%- endif %}
+  {%- if pillar.freebsd.packages is defined %}
+  - freebsd.packages
+  {%- endif %}
   {%- if pillar.freebsd.periodic is defined %}
   - freebsd.periodic
   {%- endif %}
