@@ -13,8 +13,9 @@ driver:
 
 provisioner:
   name: salt_solo
-  bootstrap_url: https://raw.githubusercontent.com/Perceptyx/kitchen-salt/freebsd_assets_fix/assets/install.sh
   salt_install: bootstrap
+  salt_bootstrap_options: -p git -p curl -p ca_root_nss -p py27-pip -p python
+  salt_version: latest
   <% if ENV['SALT_BOOTSTRAP_URL'] %>
   salt_bootstrap_url: <%= ENV['SALT_BOOTSTRAP_URL'] %>
   <% end %>
@@ -22,7 +23,7 @@ provisioner:
     - .kitchen
     - .git
     - .ssh
-  log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'debug' %>
+  log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'info' %>
   salt_version: latest
   pillars-from-files:
     <%= formula_name %>.sls: pillar.example
@@ -31,7 +32,7 @@ provisioner:
       base:
         '*':
           - <%= formula_name %>
-  log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'debug' %>
+  log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'info' %>
   formula: <%= formula_name %>
   state_top:
     base:
