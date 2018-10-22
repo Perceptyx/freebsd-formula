@@ -63,6 +63,8 @@ freebsd_networking_dns_config:
       - cmd: freebsd_networking_restart
 {% endif %} {# if networking.defaultrouter is defined #}
 
+{% if networking.interfaces is defined %}
+
 {#---------- CLONED INTERFACES ----------#}
 {% if networking.interfaces.cloned_interfaces is defined %}
 {% set cloned_interfaces = networking.interfaces.cloned_interfaces|join(" ") %}
@@ -104,6 +106,7 @@ cloned_interfaces:
 
 {% endfor %} {# for interface in networking.interfaces #}
 
+{% endif %} {# if networking.interfaces is defined #}
 {% endif %} {# if salt['pillar.get']('freebsd:networking', False) #}
 
 freebsd_networking_restart:
