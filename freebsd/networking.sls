@@ -113,7 +113,7 @@ cloned_interfaces:
 {% endif %} {# if salt['pillar.get']('freebsd:networking', False) #}
 
 
-{% if needs_network_restart is True %}
+{% if needs_network_restart == True %}
 freebsd_networking_restart:
   cmd.run:
     - name: |
