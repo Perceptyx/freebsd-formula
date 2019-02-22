@@ -7,6 +7,7 @@ include:
 {% set networking = salt['pillar.get']('freebsd:networking') %}
 
 {% if networking.gateway is defined %}
+{% set needs_network_restart = True %}
 freebsd_networking_gateway:
   sysrc.managed:
     - name: gateway_enable
@@ -16,6 +17,7 @@ freebsd_networking_gateway:
 {% endif %} {# if networking.gateway is defined #}
 
 {% if networking.defaultrouter is defined %}
+{% set needs_network_restart = True %}
 freebsd_networking_defaultrouter:
   sysrc.managed:
     - name: defaultrouter
@@ -25,6 +27,7 @@ freebsd_networking_defaultrouter:
 {% endif %} {# if networking.defaultrouter is defined #}
 
 {% if networking.dns.nameservers is defined %}
+{% set needs_network_restart = True %}
 resolvconf_config:
   file.managed:
     - name: /etc/resolvconf.conf
@@ -109,6 +112,8 @@ cloned_interfaces:
 {% endif %} {# if networking.interfaces is defined #}
 {% endif %} {# if salt['pillar.get']('freebsd:networking', False) #}
 
+
+{% if needs_network_restart == True %}
 freebsd_networking_restart:
   cmd.run:
     - name: |
@@ -121,3 +126,4 @@ freebsd_networking_restart:
     - require:
       {# Make sure we have all needed kernel modules (i.e if_lagg) loaded #}
       - sls: freebsd.kernel
+{% endif %}
