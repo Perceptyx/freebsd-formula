@@ -40,8 +40,8 @@ provisioner:
         - <%= formula_name %>
 
 platforms:
-  - name: freebsd-10.4
   - name: freebsd-11.2
+  - name: freebsd-12.0
 
 suites:
   - name: default
