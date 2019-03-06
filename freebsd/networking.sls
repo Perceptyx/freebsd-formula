@@ -123,7 +123,7 @@ freebsd_interfaces_restart:
         exec 0>&- # close stdin
         exec 1>&- # close stdout
         exec 2>&- # close stderr
-        nohup /bin/sh -c '/etc/rc.d/netif restart' &
+        nohup /bin/sh -c '/etc/rc.d/netif restart && /etc/rc.d/routing restart' &
     - timeout: 60
     - ignore_timeout: True
     - require:
