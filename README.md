@@ -184,7 +184,6 @@ freebsd:
 ```yaml
 freebsd:
   loader:
-    zfs:
-      arc_max_percentage: 15
-      arc_max_hard_limit: 2048
+    settings:
+      vfs.zfs.arc_max: 2048
 ```

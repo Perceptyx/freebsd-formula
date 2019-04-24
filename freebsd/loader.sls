@@ -1,15 +1,16 @@
-{% set memtotal = grains['mem_total'] %}
-{% set zfs_arc_max_percentage = salt['pillar.get']('freebsd:loader:zfs:arc_max_percentage', 15) %}
-{% set zfs_arc_max_hard_limit = salt['pillar.get']('freebsd:loader:zfs:arc_max_hard_limit', 2048) %}
-{% set zfs_arc_max = (memtotal / 100 * zfs_arc_max_percentage) | round | int %}
-{% if zfs_arc_max >= zfs_arc_max_hard_limit %}
-{% set zfs_arc_max = zfs_arc_max_hard_limit %}
-{% endif %}
+{%- from "freebsd/map.jinja" import freebsd with context %}
 
-zfs_arc_max:
-  file.replace:
-    - name: /boot/loader.conf
-    - pattern: ^vfs\.zfs\.arc_max\=.*$
-    - repl: vfs.zfs.arc_max="{{ zfs_arc_max }}M"
-    - append_if_not_found: True
+# Only apply loader.conf settings if we are not inside a jail
+{%- if grains['virtual_subtype'] is not defined or grains['virtual_subtype'] is defined and grains['virtual_subtype'] != 'jail' %}
 
+{%- for key, value in pillar.freebsd.loader.get('settings', {}).iteritems() %}
+
+freebsd_loader_conf_{{ key }}:
+  sysctl.present:
+    - name: {{ key }}
+    - value: {{ value }}
+    - config: /boot/loader.conf
+
+{%- endfor %}
+
+{%- endif %}
