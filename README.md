@@ -12,6 +12,7 @@ A saltstack formula that configures FreeBSD Systems.
 - [`periodic`](#periodic)
 - [`repositories`](#repositories)
 - [`sysctl`](#sysctl)
+- [`loader`](#loader)
 
 ### Audit
 
@@ -174,4 +175,16 @@ freebsd:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
       kern.ipc.somaxconn: 1024
+```
+
+### Loader
+
+- Manage settings added to `/boot/loader.conf`
+
+```yaml
+freebsd:
+  loader:
+    zfs:
+      arc_max_percentage: 15
+      arc_max_hard_limit: 2048
 ```

@@ -26,4 +26,7 @@ include:
   {%- if pillar.freebsd.sysctl is defined %}
   - freebsd.sysctl
   {%- endif %}
+  {%- if pillar.freebsd.loader is defined %}
+  - freebsd.loader
+  {%- endif %}
 {%- endif %} {# if pillar.freebsd is defined #}
