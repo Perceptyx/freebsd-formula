@@ -83,3 +83,6 @@ freebsd:
       net.inet.ip.portrange.first: 20000
       kern.coredump: 0
       kern.ipc.somaxconn: 1024
+  loader:
+    settings:
+      vfs.zfs.arc_max: 2048
