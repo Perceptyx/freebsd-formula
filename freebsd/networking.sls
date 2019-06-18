@@ -14,7 +14,7 @@ freebsd_networking_gateway:
     - value: "YES"
 {% endif %} {# if networking.gateway is defined #}
 
-{% if networking.defaultrouter is defined %}
+{% if networking.defaultrouter is defined and networking.defaultrouter | is_ip %}
 freebsd_networking_defaultrouter:
   sysrc.managed:
     - name: defaultrouter
@@ -36,7 +36,7 @@ freebsd_routing_restart:
       - sls: freebsd.kernel
 {% endif %} {# if networking.defaultrouter is defined #}
 
-{% if networking.dns.nameservers is defined %}
+{% if networking.dns is defined %}
 resolvconf_config:
   file.managed:
     - name: /etc/resolvconf.conf
@@ -71,7 +71,7 @@ freebsd_networking_dns_config:
       {% for dns in networking.dns.nameservers %}
       - nameserver {{ dns }}
       {% endfor %}
-{% endif %} {# if networking.defaultrouter is defined #}
+{% endif %} {# if networking.dns is defined #}
 
 {% if networking.interfaces is defined %}
 
