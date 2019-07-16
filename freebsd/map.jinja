@@ -1,20 +1,6 @@
 {## Start with  defaults from defaults.yaml ##}
 {% import_yaml "freebsd/defaults.yml" as default_settings %}
 
-{% set os_version_map = salt['grains.filter_by']({
-  '10.4': {
-  },
-  '11.0': {
-  },
-  '11.1': {
-  },
-  '11.2': {
-  },
-}, grain='osrelease', merge=salt['pillar.get']('freebsd:lookup')) %}
-
-{## Merge the os_version_map to the default settings ##}
-{% do default_settings.freebsd.update(os_version_map) %}
-
 {## Merge in freebsd:lookup pillar ##}
 {% set freebsd = salt['pillar.get'](
     'freebsd',
