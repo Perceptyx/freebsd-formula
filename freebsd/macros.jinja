@@ -5,10 +5,10 @@ freebsd_networking_ifconfig_{{ interface }}:
     {% if interface.lower().startswith('lagg') and protocol is defined and ports is iterable -%}
     {# We are configuring a LAGG interface with ports and protocol defined #}
     {# example output: laggproto failover laggport igb0 laggport igb1 #}
-    - value: "laggproto {{ protocol }} laggport {{ ports|join(' laggport ') }}"
+    - value: "laggproto {{ protocol }} laggport {{ ports|join(' laggport ') }} up"
     {% elif interface_cfg == None -%}
-    {# Interface in pillar but without config, we assume it must be UP #}
-    - value: "UP"
+    {# Interface in pillar but without config, we assume it must be up #}
+    - value: "up"
     {% elif interface_cfg.lower().endswith('dhcp') -%}
     {# Interface in pillar with either dhcp or syncdhcp #}
     - value: "{{ interface_cfg|lower }}"
