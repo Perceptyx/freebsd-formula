@@ -3,7 +3,7 @@
 # Only apply loader.conf settings if we are not inside a jail
 {%- if grains['virtual_subtype'] is not defined or grains['virtual_subtype'] is defined and grains['virtual_subtype'] != 'jail' %}
 
-{%- for key, value in pillar.freebsd.loader.get('settings', {}).iteritems() %}
+{%- for key, value in pillar.freebsd.loader.get('settings', {}).items() %}
 
 freebsd_loader_conf_{{ key }}:
   sysctl.present:

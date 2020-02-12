@@ -6,7 +6,7 @@
     - group: wheel
     - mode: 755
 
-{% for repo, args in salt['pillar.get']('freebsd:repositories', {}).iteritems() %}
+{% for repo, args in salt['pillar.get']('freebsd:repositories', {}).items() %}
 
 {{ repo }}-config:
   file.managed:

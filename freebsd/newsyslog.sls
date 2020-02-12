@@ -1,6 +1,6 @@
 {%- from "freebsd/map.jinja" import freebsd with context %}
 
-{% for name, args in salt['pillar.get']('freebsd:newsyslog:configs', {}).iteritems() %}
+{% for name, args in salt['pillar.get']('freebsd:newsyslog:configs', {}).items() %}
 
 {{ freebsd.newsyslog.newsyslog_include_conf }}/{{ name }}:
   file.managed:
