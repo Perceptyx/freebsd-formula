@@ -5,6 +5,7 @@
     - user: root
     - group: wheel
     - mode: 755
+    - makedirs: True
 
 {% for repo, args in salt['pillar.get']('freebsd:repositories', {}).items() %}
 
