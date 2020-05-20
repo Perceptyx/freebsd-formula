@@ -14,27 +14,27 @@ freebsd_networking_gateway:
     - value: "YES"
 {% endif %} {# if networking.gateway is defined #}
 
-{% if networking.defaultrouter is defined and networking.defaultrouter | is_ip %}
+{% if networking.defaultrouter is defined and
+      networking.defaultrouter | is_ip and
+      grains.get('virtual_subtype', '') != 'jail' %}
+
 freebsd_networking_defaultrouter:
   sysrc.managed:
     - name: defaultrouter
     - value: "{{ networking.defaultrouter }}"
-    - onchanges_in:
-      - cmd: freebsd_routing_restart
-
-freebsd_routing_restart:
-  cmd.run:
-    - name: |
-        exec 0>&- # close stdin
-        exec 1>&- # close stdout
-        exec 2>&- # close stderr
-        nohup /bin/sh -c '/etc/rc.d/routing restart' &
-        sleep 60
-    - timeout: 60
-    - ignore_timeout: True
-    - require:
-      {# Make sure we have all needed kernel modules (i.e if_lagg) loaded #}
-      - sls: freebsd.kernel
+    - onchanges:
+        cmd.run:
+          - name: |
+              exec 0>&- # close stdin
+              exec 1>&- # close stdout
+              exec 2>&- # close stderr
+              nohup /bin/sh -c '/etc/rc.d/routing restart' &
+              sleep 60
+          - timeout: 60
+          - ignore_timeout: True
+          - require:
+            {# Make sure we have all needed kernel modules (i.e if_lagg) loaded #}
+            - sls: freebsd.kernel
 {% endif %} {# if networking.defaultrouter is defined #}
 
 {% if networking.dns is defined %}
