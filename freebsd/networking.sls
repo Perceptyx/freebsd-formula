@@ -23,7 +23,7 @@ freebsd_networking_defaultrouter:
     - name: defaultrouter
     - value: "{{ networking.defaultrouter }}"
     - onchanges:
-        cmd.run:
+        - cmd.run:
           - name: |
               exec 0>&- # close stdin
               exec 1>&- # close stdout
