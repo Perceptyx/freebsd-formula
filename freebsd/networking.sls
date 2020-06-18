@@ -23,18 +23,7 @@ freebsd_networking_defaultrouter:
     - name: defaultrouter
     - value: "{{ networking.defaultrouter }}"
     - onchanges:
-        - cmd.run:
-          - name: |
-              exec 0>&- # close stdin
-              exec 1>&- # close stdout
-              exec 2>&- # close stderr
-              nohup /bin/sh -c '/etc/rc.d/routing restart' &
-              sleep 60
-          - timeout: 60
-          - ignore_timeout: True
-          - require:
-            {# Make sure we have all needed kernel modules (i.e if_lagg) loaded #}
-            - sls: freebsd.kernel
+        - cmd: freebsd_interfaces_restart
 {% endif %} {# if networking.defaultrouter is defined #}
 
 {% if networking.dns is defined %}
