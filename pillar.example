@@ -20,14 +20,29 @@ freebsd:
     gateway: True
     dns:
       nameservers:
+      # This is needed for testing in Travis CI as we can't use Google's DNS
+      {% if grains['virtual'] == 'kvm' %}
+        - 192.168.121.1
+      {% else %}
         - 8.8.8.8
         - 8.8.4.4
+      {% endif %}
       search:
         - perceptyx.com
         - domain.com
     interfaces:
-      # It's recommended to use syncdhcp so netif service triggers a dhcp request on restart
-      em0: syncdhcp
+      em1:
+      em2:
+      em3: 192.168.254.253/24
+      cloned_interfaces:
+        lagg0:
+          protocol: failover
+          ports:
+            - em1
+            - em2
+          aliases:
+            - 10.200.252.2/22
+            - vhid 60 advskew 100 pass 9WH0EJWKE9I83F2YFT1X 10.200.252.1/22
   newsyslog:
     newsyslog_include_conf: "/etc/newsyslog.conf.d"
     configs:
@@ -58,13 +73,13 @@ freebsd:
       - bash
     absent:
       - virtualbox-ose-additions-nox11
-    custom:
-      docbook:
-        status: installed
-        repository: saltstack
-      gettext-tools:
-        status: latest
-        repository: saltstack
+  #  custom:
+  #    docbook:
+  #      status: installed
+  #      repository: saltstack
+  #    gettext-tools:
+  #      status: latest
+  #      repository: saltstack
   periodic:
     file: "/etc/periodic.conf.local"
     options:
@@ -75,7 +90,7 @@ freebsd:
   repositories:
     saltstack:
       url: "http://repo.saltstack.com/freebsd/${ABI}/"
-      enabled: true
+      enabled: false
       mirror_type: "http"
       priority: 10
   sysctl:
