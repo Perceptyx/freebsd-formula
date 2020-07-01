@@ -14,6 +14,7 @@ describe 'freebsd/packages.sls' do
     end
   end
 
+=begin
   describe "Gettext Tools" do
     it "is installed from Saltstack repository" do
       expect(package("gettext-tools")).to be_installed
@@ -27,6 +28,7 @@ describe 'freebsd/packages.sls' do
       expect(command("pkg query %R docbook").stdout).to match('saltstack')
     end
   end
+=end
 
   describe "virtualbox-ose-additions-nox11" do
     it "is NOT installed" do

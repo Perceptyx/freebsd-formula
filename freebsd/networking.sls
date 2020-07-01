@@ -22,8 +22,7 @@ freebsd_networking_defaultrouter:
   sysrc.managed:
     - name: defaultrouter
     - value: "{{ networking.defaultrouter }}"
-    - onchanges:
-        - cmd: freebsd_interfaces_restart
+
 {% endif %} {# if networking.defaultrouter is defined #}
 
 {% if networking.dns is defined %}
@@ -69,11 +68,10 @@ freebsd_networking_dns_config:
 {% if networking.interfaces.cloned_interfaces is defined %}
 {% set cloned_interfaces = networking.interfaces.cloned_interfaces|join(" ") %}
 
-cloned_interfaces:
+freebsd_networking_cloned_interfaces:
   sysrc.managed:
+    - name: cloned_interfaces
     - value: "{{ cloned_interfaces|lower }}"
-    - onchanges_in:
-      - cmd: freebsd_interfaces_restart
 
 {% for interface in networking.interfaces.cloned_interfaces %}
 {% set interface_cfg = salt['pillar.get']('freebsd:networking:interfaces:cloned_interfaces:' ~ interface ) %}
@@ -107,7 +105,7 @@ cloned_interfaces:
 {% endfor %} {# for interface in networking.interfaces #}
 
 {# Restart netif only if interfaces changed #}
-freebsd_interfaces_restart:
+freebsd_network_restart:
   cmd.run:
     - name: |
         exec 0>&- # close stdin
@@ -115,8 +113,17 @@ freebsd_interfaces_restart:
         exec 2>&- # close stderr
         nohup /bin/sh -c '/etc/rc.d/netif restart && /etc/rc.d/routing restart' &
         sleep 60
-    - timeout: 60
     - ignore_timeout: True
+    - onchanges:
+      {% if networking.defaultrouter is defined and
+            networking.defaultrouter | is_ip and
+            grains.get('virtual_subtype', '') != 'jail' %}
+      - sysrc: freebsd_networking_defaultrouter
+      {% endif %}
+      - sysrc: freebsd_networking_ifconfig_*
+      {% if networking.interfaces.cloned_interfaces is defined %}
+      - sysrc: freebsd_networking_cloned_interfaces
+      {% endif %}
     - require:
       {# Make sure we have all needed kernel modules (i.e if_lagg) loaded #}
       - sls: freebsd.kernel

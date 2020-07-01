@@ -10,12 +10,15 @@ driver:
   hostname: freebsd.ci.local
   linked_clone: true
   cache_directory: false
+  require_chef_omnibus: false
+  vagrantfiles:
+    - test/vagrant/network_config.rb
 
 provisioner:
   name: salt_solo
   salt_install: bootstrap
-  salt_bootstrap_options: -p git -p curl -p ca_root_nss -p py37-pip -p python
-  salt_version: latest
+  salt_bootstrap_options: "-x python3 -X -p git -p curl -p ca_root_nss -p py37-pip -p python3 -p python37 git %s"
+  salt_version: 'v2019.2.5'
   <% if ENV['SALT_BOOTSTRAP_URL'] %>
   salt_bootstrap_url: <%= ENV['SALT_BOOTSTRAP_URL'] %>
   <% end %>
@@ -24,7 +27,6 @@ provisioner:
     - .git
     - .ssh
   log_level: <%= ENV['SALT_DEBUG_LEVEL'] || 'info' %>
-  salt_version: latest
   pillars-from-files:
     <%= formula_name %>.sls: pillar.example
   pillars:
@@ -40,8 +42,24 @@ provisioner:
         - <%= formula_name %>
 
 platforms:
-  - name: freebsd-11.2
-  - name: freebsd-12.0
+  - name: freebsd-11.3
+    driver:
+      box: generic/freebsd11
+  - name: freebsd-12.1
+    driver:
+      box: generic/freebsd12
 
 suites:
   - name: default
+    driver:
+      provision: True
+      network:
+      <% if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt' %>
+        - ["private_network", {adapter: 1, libvirt__adapter: 1, ip: "1.1.1.4", libvirt__forward_mode: "none", autostart: true, auto_config: false, virtualbox__intnet: "FREEBSD-FORMULA", libvirt__network_name: "FREEBSD-FORMULA"}]
+        - ["private_network", {adapter: 2, libvirt__adapter: 2, ip: "1.1.1.5", libvirt__forward_mode: "none", autostart: true, auto_config: false, virtualbox__intnet: "FREEBSD-FORMULA", libvirt__network_name: "FREEBSD-FORMULA"}]
+        - ["private_network", {adapter: 3, libvirt__adapter: 3, ip: "1.1.1.6", libvirt__forward_mode: "none", autostart: true, auto_config: false, virtualbox__intnet: "FREEBSD-FORMULA", libvirt__network_name: "FREEBSD-FORMULA"}]
+      <% else %>
+        - ["private_network", {":adapter => 2", virtualbox__intnet: "FREEBSD-FORMULA"}]
+        - ["private_network", {":adapter => 3", virtualbox__intnet: "FREEBSD-FORMULA"}]
+        - ["private_network", {":adapter => 4", virtualbox__intnet: "FREEBSD-FORMULA"}]
+      <% end %>

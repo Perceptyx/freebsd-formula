@@ -1,0 +1,39 @@
+---
+dist: bionic
+language: ruby
+
+rvm:
+  - 2.6.6
+
+env:
+  global:
+    - VAGRANT_VERSION=2.2.9
+    - VAGRANT_DEFAULT_PROVIDER=libvirt
+  matrix:
+    - INSTANCE=default-freebsd-113
+    - INSTANCE=default-freebsd-121
+
+# Cache the big Vagrant boxes
+cache:
+  directories:
+  - /home/travis/.vagrant.d/boxes
+
+install:
+# Install libvrt & KVM (see https://github.com/alvistack/ansible-role-virtualbox/blob/master/.travis.yml)
+- sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev xz-utils
+
+# Download Vagrant & Install Vagrant package
+- sudo wget -nv https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb
+- sudo dpkg -i vagrant_${VAGRANT_VERSION}_x86_64.deb
+
+# Vagrant correctly installed?
+- vagrant --version
+
+# Install vagrant-libvirt Vagrant plugin
+- sudo vagrant plugin install vagrant-libvirt
+
+# Install gems
+- rvmsudo bundle install
+
+script:
+- rvmsudo bundle exec kitchen verify ${INSTANCE}

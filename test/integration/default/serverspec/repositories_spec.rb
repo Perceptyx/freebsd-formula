@@ -9,5 +9,6 @@ describe 'freebsd/repositories.sls' do
     it { should contain 'saltstack' }
     it { should contain 'url: "http://repo.saltstack.com/freebsd/${ABI}/"' }
     it { should contain 'mirror_type: "http"' }
+    it { should contain 'enabled: false' }
   end
 end

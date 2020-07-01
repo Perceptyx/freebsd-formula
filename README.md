@@ -66,8 +66,7 @@ freebsd:
         - perceptyx.com
         - domain.com
     interfaces:
-      # It's recommended to use syncdhcp so netif service triggers a dhcp request on restart
-      em0: syncdhcp
+      em0: dhcp
       em1:
         aliases:
           - 1.2.3.4 netmask 255.255.255.0
